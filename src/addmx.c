@@ -76,42 +76,7 @@ int main(int argc, char *argv[]) {
         }
         fscanf(f2, "\n");
     }
-
     
-    for(int i = 0; i < line1; i++){
-        for(int j = 0; j < column1; j++){
-            printf("%d ", matrix1[i][j]);
-        }
-        printf("\n");
-    }
-
-    printf("\n");
-
-    for(int i = 0; i < line2; i++){
-        for(int j = 0; j < column2; j++){
-            printf("%d ", matrix2[i][j]);
-        }
-        printf("\n");
-    }
-    
-
-    /*
-
-    // Daqui retira-se o valor da linha e da coluna
-    char * aux1 = strtok(strdup(buffer), "\n");
-    char * mat1 = strtok(strdup(aux1), "x");
-    line1 = atoi(mat1);
-    column1 = atoi(strtok(NULL, "x"));
-
-    
-
-    // Daqui retira-se o valor da linha e da coluna
-    char * aux2 = strtok(strdup(buffer), "\n");
-    char * mat2 = strtok(strdup(aux2), "x");
-    line2 = atoi(mat2);
-    column2 = atoi(strtok(NULL, "x"));
-
-    */
 
     
     /*
