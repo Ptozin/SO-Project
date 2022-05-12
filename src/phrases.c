@@ -5,58 +5,47 @@
 
 #define BUFFER_SIZE 1024
 
-int buffer_modifier(char *buffer)
+char buffer[BUFFER_SIZE];
+
+int get_file_lines(int buff_counter)
 {
-    int i = 0;
-    int char_num = 0;
-    char str_num[10];
-    while (1)
-    {
-        if (strcmp(buffer[char_num], "\n") == 0)
-        {
-            sprintf(str_num, "[%d] ", i);
-            strcat(str_num, buffer);
-
-            i++;
-        }
-        char_num++;
-    }
-
-    return i;
-}
-
-int get_buffer_lines(char *buffer)
-{
-    int lines = 0;
-    for (int i = 0; i < strlen(buffer); i++)
-        if (!strcmp(buffer[i], '\n'))
-            printf("%c\n", buffer[i]);
-    return lines;
+    int l_counter = 0;
+    for (int i = 0; i < buff_counter; i++)
+        if (buffer[i] == '.' || buffer[i] == '!' || buffer[i] == '?')
+            l_counter++;
+    return l_counter;
 }
 
 int main(int argc, char *argv[])
 {
+    FILE *stream;
+    int buff_counter;
+
     if (argc == 1)
     {
         fprintf(stderr, "usage: phrases [-l] file\n");
         return EXIT_FAILURE;
     }
-
-    int *line_num = 0;
-    char buffer[BUFFER_SIZE];
-    char *file = (char *)malloc(sizeof(argv[1]) * sizeof(char));
-
-    strcpy(file, argv[1]);
-
-    FILE *stream;
-    stream = fopen(file, "r");
-    int count = fread(&buffer, sizeof(char), BUFFER_SIZE, stream);
-
-    if (argc == 2)
+    else if (argc == 2)
     {
-        printf("%d\n", get_buffer_lines(buffer));
+        stream = fopen(argv[1], "r");
+        buff_counter = fread(&buffer, sizeof(char), BUFFER_SIZE, stream);
+        printf("%d\n", get_file_lines(buff_counter));
     }
-    fclose(stream);
+    else
+    {
+        int i, j = 0;
+        stream = fopen(argv[2], "r");
+        buff_counter = fread(&buffer, sizeof(char), BUFFER_SIZE, stream);
+        printf("--------\n");
+        while (buffer[i] != '\0')
+        {
+            printf("%c", buffer[i]);
+            i++;
+        }
+        printf("--------\n");
+    }
 
+    fclose(stream);
     return EXIT_SUCCESS;
 }
