@@ -22,7 +22,6 @@ int main(int argc, char *argv[]) {
     }
     FILE * f2 = fopen(argv[2], "r");
     if(!f2) {
-        fclose(f1);
         printf("file %s could not be read\n", argv[2]);
     }
 
@@ -31,11 +30,96 @@ int main(int argc, char *argv[]) {
     //printf("%s\n", buffer);
 
     int line1, line2, column1, column2;
+    char* matrix1_str, *matrix2_str;
 
-    char * mat_inputs;
+    while (!feof(f1)) // to read file
+    {
+        // function used to read the contents of file
+        fread(buffer, sizeof(buffer), 1, f1);
+        matrix1_str = buffer;
+    }
+
+    while (!feof(f2)) // to read file
+    {
+        // function used to read the contents of file
+        fread(buffer, sizeof(buffer), 1, f2);
+        matrix2_str = buffer;
+    }
+
+    printf("%s\n", matrix1_str);
+
+    line1 = matrix1_str[0] - '0';
+    column1 = matrix1_str[2] - '0';
+    line2 = matrix2_str[0] - '0';
+    column2 = matrix2_str[2] - '0';
+
+    printf("%d\n", column1);
+
+    
+    int matrix1[line1][column1];
+    int matrix2[line2][column2];
+
+    rewind(f1);
+    fgets(buffer, 4, f1);
+    for(int i = 0; i < line1; i++){
+        for(int j = 0; j < column1; j++){
+            fscanf(f1, "%d ", &matrix1[i][j]);
+        }
+        fscanf(f1, "\n");
+    }
+
+    rewind(f2);
+    fgets(buffer, 4, f2);
+    for(int i = 0; i < line2; i++){
+        for(int j = 0; j < column2; j++){
+            fscanf(f2, "%d ", &matrix2[i][j]);
+        }
+        fscanf(f2, "\n");
+    }
+
+    
+    for(int i = 0; i < line1; i++){
+        for(int j = 0; j < column1; j++){
+            printf("%d ", matrix1[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+
+    for(int i = 0; i < line2; i++){
+        for(int j = 0; j < column2; j++){
+            printf("%d ", matrix2[i][j]);
+        }
+        printf("\n");
+    }
+    
+
+    /*
+
+    // Daqui retira-se o valor da linha e da coluna
+    char * aux1 = strtok(strdup(buffer), "\n");
+    char * mat1 = strtok(strdup(aux1), "x");
+    line1 = atoi(mat1);
+    column1 = atoi(strtok(NULL, "x"));
+
+    
+
+    // Daqui retira-se o valor da linha e da coluna
+    char * aux2 = strtok(strdup(buffer), "\n");
+    char * mat2 = strtok(strdup(aux2), "x");
+    line2 = atoi(mat2);
+    column2 = atoi(strtok(NULL, "x"));
+
+    */
+
+    
+    /*
+    char mat_inputs;
     fscanf(f1, "%s", &mat_inputs);
-    prinf("%s\n", mat_inputs);
-
+    printf("%s\n", mat_inputs);
+    */
+    
 
 
     // Daqui retira-se o valor da linha e da coluna
