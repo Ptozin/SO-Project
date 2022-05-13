@@ -35,14 +35,19 @@ int main(int argc, char *argv[]) {
     // to read line and column of matrix
     fscanf(f2, "%dx%d", &line2, &column2);
 
-    int matrix1[line1][column1];
-    int matrix2[line2][column2];
+    int *ptr = mmap(NULL, 3*line1*column1*sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, 0, 0 );
+    if(ptr == MAP_FAILED){
+        printf("Mapping Failed\n");
+        return 1;
+    }
+    //int matrix1[line1][column1];
+    //int matrix2[line2][column2];
 
     rewind(f1);
     fgets(buffer, LINESIZE, f1);
     for(int i = 0; i < line1; i++){
         for(int j = 0; j < column1; j++){
-            fscanf(f1, "%d ", &matrix1[i][j]);
+            fscanf(f1, "%d", &ptr[i*column1+j]);
         }
         fscanf(f1, "\n");
     }
@@ -51,18 +56,17 @@ int main(int argc, char *argv[]) {
     fgets(buffer, LINESIZE, f2);
     for(int i = 0; i < line2; i++){
         for(int j = 0; j < column2; j++){
-            fscanf(f2, "%d ", &matrix2[i][j]);
+            fscanf(f2, "%d ", &ptr[line1*column1 + i*column2+j]);
         }
         fscanf(f2, "\n");
     }
 
-
-    int *ptr = mmap ( NULL, line1*column1*sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, 0, 0 );
-    if(ptr == MAP_FAILED){
-        printf("Mapping Failed\n");
-        return 1;
+    for(int i = 0; i < line1*column1*3; i++) {
+        //if(i%column1 == 0) printf("\n");
+        printf("%d ",ptr[i]);
     }
-    
+
+
 
     fclose(f1);
     fclose(f2);

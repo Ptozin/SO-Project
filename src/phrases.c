@@ -43,8 +43,7 @@ int main(int argc, char *argv[])
     char *ptr = buffer;
     printf("[%d] ", line);
 
-    while (*ptr != '\0')
-    {
+    while (*ptr != '\0') {
         if(*ptr == '\n')
             *ptr = ' ';
         printf("%c", *ptr);
