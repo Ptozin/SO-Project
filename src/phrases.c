@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
     char *ptr = buffer;
     printf("[%d] ", line);
 
-
     while (*ptr != '\0')
     {
         if(*ptr == '\n')
@@ -53,11 +52,9 @@ int main(int argc, char *argv[])
             line++;
             printf("\n[%d]", line);
         }
-
         ptr++;
-
     }
-    printf("--------\n");
+    printf("\n--------\n");
     
 
     fclose(stream);

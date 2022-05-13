@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     fscanf(f1, "%dx%d", &line1, &column1);
     // to read line and column of matrix
     fscanf(f2, "%dx%d", &line2, &column2);
-     
+
     int matrix1[line1][column1];
     int matrix2[line2][column2];
 
@@ -62,6 +62,7 @@ int main(int argc, char *argv[]) {
         printf("Mapping Failed\n");
         return 1;
     }
+    
 
     fclose(f1);
     fclose(f2);
