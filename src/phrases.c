@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 
@@ -41,11 +42,17 @@ int main(int argc, char *argv[])
         printf("--------\n");
         int line = 1;
         char *ptr = buffer;
-        printf("[%d] ", line);
+        const char str2[] = "'\n'";
+        const char str3[] = "'\0'";
+        int len = strcspn(buffer, str2);
+        int end = strcspn(buffer, str3);
+        while(len <= end) {
+            buffer[len] = ' ';
+            len = strcspn(buffer, str2);
+        }
 
+        printf("[%d] ", line);
         while (*ptr != '\0') {
-            if(*ptr == '\n')
-                *ptr = ' ';
             printf("%c", *ptr);
             if(new_line(*ptr)) {
                 line++;
