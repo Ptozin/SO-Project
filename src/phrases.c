@@ -22,9 +22,10 @@ int new_line(char buffer_char) {
 
 int main(int argc, char *argv[])
 {
+    char *buffer;
+        buffer = (char*)malloc(sizeof(char)*BUFFER_SIZE);
     FILE *stream;
     int buff_counter;
-    char buffer[BUFFER_SIZE];
     if (argc == 1 || argc > 3)
     {
         fprintf(stderr, "usage: phrases [-l] file\n");
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
     }
     else {
         stream = fopen(argv[2], "r");
-        buff_counter = fread(&buffer, sizeof(char), BUFFER_SIZE, stream);
+        buff_counter = fread(buffer, sizeof(char), BUFFER_SIZE, stream);
         printf("--------\n");
         int line = 1;
         char *ptr = buffer;
@@ -46,10 +47,11 @@ int main(int argc, char *argv[])
         const char str3[] = "'\0'";
         int len = strcspn(buffer, str2);
         int end = strcspn(buffer, str3);
-        while(len <= end) {
+        while(len < end) {
             buffer[len] = ' ';
             len = strcspn(buffer, str2);
         }
+        printf("%s\n", buffer);
 
         printf("[%d] ", line);
         while (*ptr != '\0') {
