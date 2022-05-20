@@ -35,13 +35,15 @@ int main(int argc, char *argv[]) {
     // to read line and column of matrix
     fscanf(f2, "%dx%d", &line2, &column2);
 
+    if(line1 != line2 || column1 != column2){
+         print("Matrices have different sizes");
+    }
+
     int *ptr = mmap(NULL, 3*line1*column1*sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, 0, 0 );
     if(ptr == MAP_FAILED){
         printf("Mapping Failed\n");
         return 1;
     }
-    //int matrix1[line1][column1];
-    //int matrix2[line2][column2];
 
     rewind(f1);
     fgets(buffer, LINESIZE, f1);
