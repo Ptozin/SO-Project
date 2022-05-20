@@ -1,15 +1,13 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 
 #define BUFFER_SIZE 1024
-char buffer[BUFFER_SIZE];
 
-int get_file_lines(int buff_counter)
+int get_file_lines(int buff_counter, char *buffer)
 {
     int l_counter = 0;
-    for (int i = 0; i <= buff_counter; i++)
+    for (int i = 0; i <= buff_counter && i < BUFFER_SIZE; i++)
         if (buffer[i] == '.' || buffer[i] == '!' || buffer[i] == '?' || buffer[i] == '\0')
             l_counter++;
     return l_counter;
@@ -25,7 +23,8 @@ int main(int argc, char *argv[])
 {
     FILE *stream;
     int buff_counter;
-    if (argc == 1)
+    char buffer[BUFFER_SIZE];
+    if (argc == 1 || argc > 3)
     {
         fprintf(stderr, "usage: phrases [-l] file\n");
         return EXIT_FAILURE;
@@ -34,28 +33,30 @@ int main(int argc, char *argv[])
     {
         stream = fopen(argv[1], "r");
         buff_counter = fread(&buffer, sizeof(char), BUFFER_SIZE, stream);
-        printf("%d\n", get_file_lines(buff_counter));
+        printf("%d\n", get_file_lines(buff_counter, &buffer));
     }
-    stream = fopen(argv[2], "r");
-    buff_counter = fread(&buffer, sizeof(char), BUFFER_SIZE, stream);
-    printf("--------\n");
-    int line = 1;
-    char *ptr = buffer;
-    printf("[%d] ", line);
+    else {
+        stream = fopen(argv[2], "r");
+        buff_counter = fread(&buffer, sizeof(char), BUFFER_SIZE, stream);
+        printf("--------\n");
+        int line = 1;
+        char *ptr = buffer;
+        printf("[%d] ", line);
 
-    while (*ptr != '\0') {
-        if(*ptr == '\n')
-            *ptr = ' ';
-        printf("%c", *ptr);
-        if(new_line(*ptr)) {
-            line++;
-            printf("\n[%d]", line);
+        while (*ptr != '\0') {
+            if(*ptr == '\n')
+                *ptr = ' ';
+            printf("%c", *ptr);
+            if(new_line(*ptr)) {
+                line++;
+                printf("\n[%d]", line);
+            }
+            ptr++;
         }
-        ptr++;
-    }
-    printf("\n--------\n");
-    
+        printf("\n--------\n");
+        
 
-    fclose(stream);
+        fclose(stream);
+    }
     return EXIT_SUCCESS;
 }
