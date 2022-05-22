@@ -37,6 +37,8 @@ int main(int argc, char *argv[])
         stream = fopen(argv[2], "r");
         while ((ch = fgetc(stream)) != EOF)
         {
+            if (ch == '\n')
+                continue;
             buffer[i] = ch;
             i++;
             if (ch == '.' || ch == '!' || ch == '?')
