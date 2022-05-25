@@ -147,8 +147,12 @@ int main(int argc, char* argv[]) {
         }
         close(fd[READ_END]);
 
-        char * str = replaceWord__(child_buffer, keywords[2][0], keywords[2][1]);
-        printf("%s", str);
+        char * str = child_buffer;
+        for(int j = 0; j < i; j++){
+            str = replaceWord__(str, keywords[j][0], keywords[j][1]);
+            //printf("%s\n", str);
+        }
+        printf("%s\n", str);
 
         /*
         token = strtok(child_buffer, "\0");
